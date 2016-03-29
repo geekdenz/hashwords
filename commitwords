@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+import re
+from sys import argv
+commit=argv[1] #'76d4984'
+commitint=int(commit, 16)
+regex=re.compile(r'^[A-Za-z]+$')
+f=open('/usr/share/dict/words').read().split("\n")
+a=list(f[:-1])
+words=list(filter(lambda x: regex.match(x), a))
+commitwords='%s.%s' % (words[commitint>>16], words[commitint&0xf])
+print(commitwords)
