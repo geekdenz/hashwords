@@ -2,16 +2,22 @@
 import re
 from sys import argv
 word=argv[1] #'76d4984'
-commitwords=word.split('.')
-
-for w in commitwords:
-
-
-
-commitint=int(commit, 16)
-regex=re.compile(r'^[A-Za-z]+$')
 f=open('/usr/share/dict/words').read().split("\n")
 a=list(f[:-1])
+regex=re.compile(r'^[A-Za-z]+$')
 words=list(filter(lambda x: regex.match(x), a))
-commitwords='%s.%s' % (words[commitint>>16], words[commitint&0xf])
-print(commitwords)
+commitwords=word.split('.')
+
+numbers=[]
+
+for w in commitwords:
+    numbers.append(words.index(w))
+
+shift = 0;
+numbers.reverse()
+finalsum = 0
+for i in numbers:
+    finalsum += i << shift
+    shift += 16
+
+print('%0.2x' % finalsum)
